@@ -6,7 +6,12 @@ const globalForDb = globalThis as unknown as {
   client: postgres.Sql | undefined
 }
 
-const client = globalForDb.client ?? postgres(process.env.POSTGRES_URL!, { prepare: false })
+const postgresUrl = process.env.POSTGRES_URL
+if (!postgresUrl) {
+  throw new Error('POSTGRES_URL environment variable is required')
+}
+
+const client = globalForDb.client ?? postgres(postgresUrl, { prepare: false })
 
 globalForDb.client = client
 

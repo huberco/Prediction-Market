@@ -134,13 +134,18 @@ function siweTwoFactorRedirect() {
   }
 }
 
+const betterAuthSecret = process.env.BETTER_AUTH_SECRET
+if (!betterAuthSecret) {
+  throw new Error('BETTER_AUTH_SECRET environment variable is required')
+}
+
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: 'pg',
     schema,
   }),
   appName: process.env.NEXT_PUBLIC_SITE_NAME,
-  secret: process.env.BETTER_AUTH_SECRET,
+  secret: betterAuthSecret,
   advanced: {
     database: {
       generateId: false,

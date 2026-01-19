@@ -45,11 +45,11 @@ const DROP_TAGS_BUT_KEEP_CONTENT = [
 function stripElementBlocks(svg: string, tag: string) {
   const openTag = `<${tag}`
   const closeTag = `</${tag}>`
-  const lower = svg.toLowerCase()
+  const lower = svg?.toLowerCase()
   let cursor = 0
   let sanitized = ''
 
-  while (cursor < svg.length) {
+  while (cursor < svg?.length) {
     const start = lower.indexOf(openTag, cursor)
     if (start === -1) {
       sanitized += svg.slice(cursor)
